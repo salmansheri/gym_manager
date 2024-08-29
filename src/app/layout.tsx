@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/header";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/components/providers/query-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Ubuntu({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={font.className}>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            <main className="">{children}</main>
+            <Toaster />
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  name String 
+  email String @unique
+  password String
+  avatar String?
+  type String @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+enum Package {
+  OneMonth
+  TwoMonth
+  ThreeMonth
+}
+
+enum Status {
+  PAID
+  PENDING
+}
+
+model Member {
+  id String @id @default(cuid())
+  name String 
+  email String @unique
+  password String? 
+  avatar String?
+  idProof String
+  type String @default("member")
+  package Package @default(OneMonth)
+  status Status @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Category {
+  Protien
+  Gainer
+  PreWorkout
+  Creatine
+  Vitamins
+  BCAAS
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+model Supplement {
+    id String @id @default(cuid())
+    name String 
+    price Int
+    image String?
+    weight String?
+    flavour String?
+    bestBefore String?
+    preference String?
+    protienPercent String?
+    protienPerServing String?
+    pricePerServing Int?
+    PricePerGram Int?
+    form String?
+    packaging String?
+    goal String?
+    gender Gender
+    description String?
+    category Category @default(Protien)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+
+}
+
+
